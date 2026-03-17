@@ -114,7 +114,7 @@ export default function App() {
       data.phone = `+91 ${data.phone}`;
     }
     
-    const webhookUrl = 'https://services.leadconnectorhq.com/hooks/ugg4v4G1WJMtqGcWFUp5/webhook-trigger/17fba32c-e5ef-4fef-8870-5bcd623299e9';
+    const webhookUrl = 'https://services.leadconnectorhq.com/hooks/ugg4v4G1WJMtqGcWFUp5/webhook-trigger/33fc071a-4a9e-4240-ba37-0958a2eb789a';
     
     try {
       // Using 'no-cors' as LeadConnector webhooks often don't return proper CORS headers for JSON POSTs
