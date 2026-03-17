@@ -577,19 +577,19 @@ export default function App() {
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onClick={closeModal}></div>
-          <div className="bg-white rounded-3xl w-full max-w-md relative z-10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="bg-white rounded-3xl w-full max-w-4xl relative z-10 shadow-2xl overflow-hidden flex flex-col h-[90vh]">
             <div className="bg-brand-purple p-6 text-white flex justify-between items-center shrink-0">
               <h3 className="font-heading font-bold text-2xl">Book a Service</h3>
               <button onClick={closeModal} className="text-white/80 hover:text-white transition-colors">
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-6 overflow-y-auto">
+            <div className="p-0 overflow-y-auto flex-1 bg-gray-50">
               <iframe 
                 src="https://api.leadconnectorhq.com/widget/booking/U7WLG1tAOUENoz8nLBCo" 
-                style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
+                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '100%' }} 
                 scrolling="no" 
-                id="U7WLG1tAOUENoz8nLBCo_1773749048210"
+                id="U7WLG1tAOUENoz8nLBCo_1773749488333"
               />
             </div>
           </div>
