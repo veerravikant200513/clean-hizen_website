@@ -584,11 +584,11 @@ export default function App() {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-0 overflow-y-auto flex-1 bg-gray-50">
+            <div className="p-0 overflow-y-auto flex-1 bg-gray-50 relative -webkit-overflow-scrolling-touch">
               <iframe 
                 src="https://api.leadconnectorhq.com/widget/booking/U7WLG1tAOUENoz8nLBCo" 
-                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '100%' }} 
-                scrolling="no" 
+                style={{ width: '100%', height: '100%', border: 'none', position: 'absolute', top: 0, left: 0 }} 
+                scrolling="auto" 
                 id="U7WLG1tAOUENoz8nLBCo_1773749488333"
               />
             </div>
