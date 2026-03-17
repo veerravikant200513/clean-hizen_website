@@ -96,44 +96,6 @@ export default function App() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    const formData = new FormData(e.currentTarget);
-    const rawData = Object.fromEntries(formData.entries());
-    const data: Record<string, string> = {};
-    
-    for (const key in rawData) {
-      data[key] = rawData[key].toString();
-    }
-    
-    if (data.phone) {
-      data.phone = `+91 ${data.phone}`;
-    }
-    
-    const webhookUrl = 'https://services.leadconnectorhq.com/hooks/ugg4v4G1WJMtqGcWFUp5/webhook-trigger/33fc071a-4a9e-4240-ba37-0958a2eb789a';
-    
-    try {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      alert('Booking request submitted! We will contact you shortly.');
-      closeModal();
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting your request. Please try again or contact us directly.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
@@ -623,47 +585,12 @@ export default function App() {
               </button>
             </div>
             <div className="p-6 overflow-y-auto">
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <input name="fullName" type="text" required className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition-all" placeholder="John Doe" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-4 py-2 border border-r-0 border-gray-300 rounded-l-xl bg-gray-50 text-gray-600 font-medium">
-                      +91
-                    </span>
-                    <input name="phone" type="tel" pattern="[0-9]{10}" maxLength={10} required className="w-full px-4 py-2 border border-gray-300 rounded-r-xl focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition-all" placeholder="10-digit number" title="Please enter a valid 10-digit Indian phone number" onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, ''); }} />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Required</label>
-                  <select name="service" className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition-all bg-white">
-                    <option>Deep Cleaning</option>
-                    <option>Sofa & Carpet Shampooing</option>
-                    <option>Bathroom Cleaning</option>
-                    <option>Kitchen Cleaning</option>
-                    <option>Sanitization Services</option>
-                    <option>Other (Please specify below)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                  <input name="address" type="text" required className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition-all" placeholder="House No, Street, Area..." />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">PIN Code</label>
-                  <input name="pinCode" type="text" pattern="[0-9]{6}" maxLength={6} required className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition-all" placeholder="500001" title="Please enter a valid 6-digit PIN code" onInput={(e) => { e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, ''); }} />
-                </div>
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className={`w-full bg-brand-green hover:bg-[#73b313] text-white py-3 rounded-xl font-bold text-lg transition-all mt-4 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {isSubmitting ? 'Sending...' : 'Submit Request'}
-                </button>
-              </form>
+              <iframe 
+                src="https://api.leadconnectorhq.com/widget/booking/U7WLG1tAOUENoz8nLBCo" 
+                style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
+                scrolling="no" 
+                id="U7WLG1tAOUENoz8nLBCo_1773749048210"
+              />
             </div>
           </div>
         </div>
