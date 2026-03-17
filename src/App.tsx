@@ -117,15 +117,12 @@ export default function App() {
     const webhookUrl = 'https://services.leadconnectorhq.com/hooks/ugg4v4G1WJMtqGcWFUp5/webhook-trigger/33fc071a-4a9e-4240-ba37-0958a2eb789a';
     
     try {
-      // Using 'no-cors' as LeadConnector webhooks often don't return proper CORS headers for JSON POSTs
-      // but they still receive the data successfully.
       await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        mode: 'no-cors'
       });
 
       alert('Booking request submitted! We will contact you shortly.');
