@@ -13,7 +13,6 @@ import {
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import ThankYou from './pages/ThankYou';
 
 const WaveTop = ({ color }: { color: string }) => (
   <div className="w-full overflow-hidden leading-none rotate-180 -mb-1">
@@ -88,6 +87,51 @@ export default function App() {
       setActiveReview((prev) => (prev + 1) % reviewsData.length);
     }, 6000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Listen for GoHighLevel form submission or calendar booking events
+  useEffect(() => {
+    const handleGHLMessage = (e: MessageEvent) => {
+      const data = e.data;
+      if (!data) return;
+
+      let isConversion = false;
+
+      // Handle raw string payloads
+      if (typeof data === 'string') {
+        const lowerData = data.toLowerCase();
+        if (
+          lowerData.includes('form_submit') || 
+          lowerData.includes('form-submit') || 
+          lowerData.includes('bookingcomplete') || 
+          lowerData.includes('calendar-booking')
+        ) {
+          isConversion = true;
+        }
+      } 
+      // Handle object payloads
+      else if (typeof data === 'object') {
+        const typeStr = String(data.type || data.action || data.event || '').toLowerCase();
+        if (
+          typeStr.includes('submit') || 
+          typeStr.includes('booking') || 
+          typeStr.includes('appointment')
+        ) {
+          isConversion = true;
+        }
+      }
+
+      if (isConversion) {
+        // Fire Facebook Pixel Lead Event instantly
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead');
+          console.log('[Meta Pixel] Lead event fired natively from GHL listener.');
+        }
+      }
+    };
+
+    window.addEventListener('message', handleGHLMessage);
+    return () => window.removeEventListener('message', handleGHLMessage);
   }, []);
 
   const nextReview = () => setActiveReview((prev) => (prev + 1) % reviewsData.length);
@@ -523,7 +567,6 @@ export default function App() {
         } />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
 
       {/* Footer */}
