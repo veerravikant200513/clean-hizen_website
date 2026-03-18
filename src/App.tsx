@@ -13,6 +13,7 @@ import {
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import ThankYou from './pages/ThankYou';
 
 const WaveTop = ({ color }: { color: string }) => (
   <div className="w-full overflow-hidden leading-none rotate-180 -mb-1">
@@ -522,6 +523,7 @@ export default function App() {
         } />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
 
       {/* Footer */}
