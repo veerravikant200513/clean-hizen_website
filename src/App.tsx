@@ -95,38 +95,31 @@ export default function App() {
       const data = e.data;
       if (!data) return;
 
-      let isConversion = false;
-
-      // Handle raw string payloads
-      if (typeof data === 'string') {
-        const lowerData = data.toLowerCase();
+      try {
+        const dataStr = typeof data === 'string' ? data : JSON.stringify(data);
+        const lowerData = dataStr.toLowerCase();
+        
+        // Capture ANY GHL success message while filtering out the constant iframe resizing noise
         if (
-          lowerData.includes('form_submit') || 
-          lowerData.includes('form-submit') || 
-          lowerData.includes('bookingcomplete') || 
-          lowerData.includes('calendar-booking')
+          lowerData.includes('submit') || 
+          lowerData.includes('booking') || 
+          lowerData.includes('appointment') ||
+          lowerData.includes('success')
         ) {
-          isConversion = true;
+          if (!lowerData.includes('resize') && !lowerData.includes('height')) {
+            // Fire Facebook Pixel Lead Event instantly
+            if (typeof window !== 'undefined' && (window as any).fbq) {
+              // Ensure we only fire it once per session to avoid duplicate tracking
+              if (!(window as any).hasFiredGHL) {
+                (window as any).fbq('track', 'Lead');
+                (window as any).hasFiredGHL = true;
+                console.log('[Meta Pixel] Lead event fired natively from updated GHL listener.');
+              }
+            }
+          }
         }
-      } 
-      // Handle object payloads
-      else if (typeof data === 'object') {
-        const typeStr = String(data.type || data.action || data.event || '').toLowerCase();
-        if (
-          typeStr.includes('submit') || 
-          typeStr.includes('booking') || 
-          typeStr.includes('appointment')
-        ) {
-          isConversion = true;
-        }
-      }
-
-      if (isConversion) {
-        // Fire Facebook Pixel Lead Event instantly
-        if (typeof window !== 'undefined' && (window as any).fbq) {
-          (window as any).fbq('track', 'Lead');
-          console.log('[Meta Pixel] Lead event fired natively from GHL listener.');
-        }
+      } catch (err) {
+        console.error('Error parsing GHL listener data:', err);
       }
     };
 
